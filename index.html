@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#12384c">
   <meta name="description" content="走进松风谷，驾驶履带机甲，照料作物，经营属于你的原野农场。">
   <title>原野 FIELDWORK · 松风谷</title>
-  <script type="module" crossorigin src="./assets/index-BdKWYot8.js"></script>
+  <script type="module" crossorigin src="./assets/index-BGAU2DBN.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/three-BLta5EX-.js">
   <link rel="modulepreload" crossorigin href="./assets/gltf-BFS9q94c.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-geGU_IkW.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-CyorKLnC.css">
 </head>
 <body>
   <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -175,6 +175,24 @@
       <p class="touch-help">触屏：左侧摇杆步行；驾驶机甲时，上下推控制行驶，左右推可原地转向。拖动场景环视，右侧按钮使用工具。</p>
     </section>
   </div>
-  <div id="loading" role="status" aria-live="polite"><div class="loading-content"><div class="loading-emblem"><svg class="icon"><use href="#i-leaf"/></svg></div><span class="eyebrow">FIELDWORK</span><h2>正在走进松风谷</h2><p>准备农田与原野</p><div class="loading-line"><i></i></div></div></div>
+  <div id="loading" role="status" aria-live="polite"><div class="loading-content"><div class="loading-emblem"><svg class="icon"><use href="#i-leaf"/></svg></div><span class="eyebrow">FIELDWORK</span><h2>正在走进松风谷</h2><p id="loading-detail">准备农田与原野</p><div class="loading-line" aria-hidden="true"><i></i></div><button id="loading-retry" class="loading-retry" type="button" hidden>重新加载</button></div></div>
+  <script>
+    (function () {
+      const loading = document.getElementById('loading');
+      const retry = document.getElementById('loading-retry');
+      function failed() {
+        loading.classList.add('loading-failed');
+        loading.style.display = 'grid';
+        loading.querySelector('h2').textContent = '农场暂时没有载入';
+        document.getElementById('loading-detail').textContent = '请重新加载后再试。';
+        retry.hidden = false;
+        retry.focus();
+      }
+      retry.addEventListener('click', function () { window.location.reload(); });
+      const entry = document.querySelector('script[type="module"]');
+      if (entry) entry.addEventListener('error', failed);
+      window.addEventListener('fieldwork:boot-error', failed);
+    })();
+  </script>
 </body>
 </html>
